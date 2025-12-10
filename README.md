@@ -1,4 +1,4 @@
-git@github.com:dUbislav/sales-bonus.git
+https://github.com/dUbislav/sales-bonus
 
 # Проектная работа "Пряники"
 5 спринт, модуль JS
