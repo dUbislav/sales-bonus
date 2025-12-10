@@ -8,7 +8,7 @@ function calculateSimpleRevenue(purchase, _product) {
    // @TODO: Расчет выручки от операции
    // const { discount, sale_price, quantity } = purchase;
    const discount = 1 - (purchase.discount / 100);
-   return _product.sale_price*purchase.quantity*discount;
+   return purchase.sale_price*purchase.quantity*discount;
 }
 
 /**
@@ -21,13 +21,13 @@ function calculateSimpleRevenue(purchase, _product) {
 function calculateBonusByProfit(index, total, seller) {
     // @TODO: Расчет бонуса от позиции в рейтинге
     if (index === 0) {
-    return 0.15;
+    return 0.15 * seller.profit;
 } else if (index === 1 || index === 2) {
-    return 0.1;
+    return 0.1 * seller.profit;
 } else if (index === total) {
     return 0;
 } else { // Для всех остальных
-    return 0.05;
+    return 0.05 * seller.profit;
 } 
 
 }
@@ -98,7 +98,7 @@ function analyzeSalesData(data, options) {
     });
     // @TODO: Назначение премий на основе ранжирования
     sellerStats.forEach((seller, index) => {
-        seller.bonus = calculateBonusByProfit(index, sellerStats.length - 1, seller)*seller.profit;
+        seller.bonus = calculateBonusByProfit(index, sellerStats.length - 1, seller);
         seller.top_products = Object.entries(seller.products_sold || {}).map(([sku, quantity]) => ({ sku, quantity })).sort((a, b) => b.quantity - a.quantity).slice(0, 10);
     });
     // @TODO: Подготовка итоговой коллекции с нужными полями
